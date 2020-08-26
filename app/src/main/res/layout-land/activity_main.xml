@@ -102,19 +102,20 @@
         android:id="@+id/layout_joystick2"
         android:layout_width="200dp"
         android:layout_height="200dp"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="36dp"
-        android:background="@drawable/image_button_bg" >
-    </RelativeLayout>
+        android:background="@drawable/image_button_bg"></RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/layout_joystick"
         android:layout_width="200dp"
         android:layout_height="200dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
+        android:layout_marginStart="36dp"
         android:layout_marginLeft="36dp"
-        android:background="@drawable/image_button_bg" >
-    </RelativeLayout>
+        android:background="@drawable/image_button_bg"></RelativeLayout>
 </RelativeLayout>

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -109,6 +110,18 @@ public class MainActivity extends AppCompatActivity {
         js2.setOffset(90);
         js2.setMinimumDistance(50);
 
+        layout_joystick.setOnDragListener(new View.OnDragListener() {
+            @Override
+            public boolean onDrag(View view, DragEvent dragEvent) {
+
+
+                return false;
+            }
+        });
+
+
+
+
         layout_joystick.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View arg0, MotionEvent arg1) {
                 js.drawStick(arg1);
@@ -140,21 +153,8 @@ public class MainActivity extends AppCompatActivity {
                     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-                    //
-                    textView3.setText("Angle : " + String.valueOf(js.getAngle()));
-                    textView4.setText("Distance : " + String.valueOf(js.getDistance()));
+                    textView3.setText("Angle : " +(js.getAngle()));
+                    textView4.setText("Distance : " +(js.getDistance()));
 
                     int direction = js.get8Direction();
                     if(direction == JoyStickClass.STICK_UP) {
@@ -196,8 +196,8 @@ public class MainActivity extends AppCompatActivity {
                 js2.drawStick(arg1);
                 if(arg1.getAction() == MotionEvent.ACTION_DOWN
                         || arg1.getAction() == MotionEvent.ACTION_MOVE) {
-                    textView6.setText("X : " + String.valueOf(js2.getX()));
-                    textView7.setText("Y : " + String.valueOf(js2.getY()));
+                    textView6.setText("X : " + (js2.getX()));
+                    textView7.setText("Y : " + (js2.getY()));
                     valory2=js2.getY();
 
                     if(valory2>0){
@@ -223,23 +223,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
-
                     EnviarPosiciones();
 
 
-
-
-
-
-                    textView8.setText("Angle : " + String.valueOf(js2.getAngle()));
-                    textView9.setText("Distance : " + String.valueOf(js2.getDistance()));
+                    textView8.setText("Angle : " + (js2.getAngle()));
+                    textView9.setText("Distance : " + (js2.getDistance()));
 
                     int direction = js2.get8Direction();
                     if(direction == JoyStickClass.STICK_UP) {
