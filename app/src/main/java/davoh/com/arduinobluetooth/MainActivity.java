@@ -16,6 +16,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
     //VARIABLES DE BOTONES
@@ -28,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     JoyStickClass js;
     JoyStickClass js2;
 
-    int valory, valory2;
+
 
     //VARIABLES BLUETOOTH
     public Handler bluetooothIn;
@@ -41,10 +44,12 @@ public class MainActivity extends AppCompatActivity {
 
     //private static final UUID BTMODULEUUID = UUID.fromString("FDA50693A4E24FB1AFCFC6EB07647825");
     private static String address = null;
-    int signo=0;
-    int signo2=0;
+    int direction=0;
+    int direction2=0;
     int stop=0;
     int stop2=0;
+    int valory=0;
+    int valory2=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,17 +115,6 @@ public class MainActivity extends AppCompatActivity {
         js2.setOffset(90);
         js2.setMinimumDistance(50);
 
-        layout_joystick.setOnDragListener(new View.OnDragListener() {
-            @Override
-            public boolean onDrag(View view, DragEvent dragEvent) {
-
-
-                return false;
-            }
-        });
-
-
-
 
         layout_joystick.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View arg0, MotionEvent arg1) {
@@ -132,10 +126,10 @@ public class MainActivity extends AppCompatActivity {
                     //almacenar valory
                     valory=js.getY();
                     if(valory>0){
-                        signo=1;
+                        direction=1;
                     }else if(valory<0){
                         valory=((valory)*(-1));
-                        signo=0;
+                        direction=0;
                     }
 
 
@@ -151,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
                         //va a ir de 101 a 500
                         valory=valory*2;
                     }
+
 
 
                     textView3.setText("Angle : " +(js.getAngle()));
@@ -177,6 +172,8 @@ public class MainActivity extends AppCompatActivity {
                         textView5.setText("Direction : Center");
                     }
                 } else if(arg1.getAction() == MotionEvent.ACTION_UP) {
+                    stop=1;
+                    valory=0;
                     textView1.setText("X :");
                     textView2.setText("Y :");
                     textView3.setText("Angle :");
@@ -201,10 +198,10 @@ public class MainActivity extends AppCompatActivity {
                     valory2=js2.getY();
 
                     if(valory2>0){
-                        signo2=1;
+                        direction2=1;
                     }else if(valory2<0){
                         valory2=((valory2)*(-1));
-                        signo2=0;
+                        direction2=0;
                     }
 
 
@@ -250,6 +247,9 @@ public class MainActivity extends AppCompatActivity {
                         textView10.setText("Direction : Center");
                     }
                 } else if(arg1.getAction() == MotionEvent.ACTION_UP) {
+                    //reset values
+                    stop2=1;
+                    valory2=0;
                     textView6.setText("X :");
                     textView7.setText("Y :");
                     textView8.setText("Angle :");
@@ -264,42 +264,14 @@ public class MainActivity extends AppCompatActivity {
 //JOYSTICK2
 
 
-        /*enviarDatos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
 
-
-                String cadenaNumFinal= (numPro1 + "." + numPro2 + numPro3 + numPro4);
-                numProFinal=(Float.parseFloat(cadenaNumFinal));
-
-
-                String cadenaNumFinalDer= (numDer1 + "." + numDer2 + numDer3 + numDer4);
-                numDerFinal=(Float.parseFloat(cadenaNumFinalDer));
-
-                MyConexionBT.write("*" +"#");
-
-            }
-        });*/
-
-
-
-
-
-        //ESTA LLAVE CIERRA TODO EL ON CREATE
     }
 
 
     public void EnviarPosiciones(){
 
-
-
-            MyConexionBT.write("*" + signo + stop + valory + signo2+ stop2 +valory2+"#");
-
-
-        //cadena=  13240
-        //cadena=  1246*
-        //cadena=  110**
+            MyConexionBT.write("*" + direction + stop + valory + direction2+ stop2 +valory2+"#");
 
     }
 
@@ -358,7 +330,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
 
     //Crea la clase que permite crear el evento de conexion
     private class ConnectedThread extends Thread
