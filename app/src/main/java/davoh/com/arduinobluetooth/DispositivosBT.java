@@ -37,7 +37,7 @@ public class DispositivosBT extends AppCompatActivity {
         super.onResume();
         VerificarEstadoBT();
         mPairedDevicesArrayAdapter = new ArrayAdapter<String>(this, R.layout.nombre_dispositivos);
-        IdLista = findViewById(R.id.IdLista);
+        IdLista = findViewById(R.id.listViewDevices);
         IdLista.setAdapter(mPairedDevicesArrayAdapter);
         IdLista.setOnItemClickListener(mDeviceClickListener);
         mBtAdapter=BluetoothAdapter.getDefaultAdapter();
